@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            crossorigin="anonymous"></script>
+</head>
+<body class="">
+    <div class="w-50 m-auto border border-success rounded p-3">
+    <form method="post" action="/" th:action="@{/}" th:object="${employee}">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="hidden" id="id" th:field="*{id}">
+            <input class="form-control" id="firstName" placeholder="Enter First Name" th:field="*{firstName}">
+
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" id="lastName"  placeholder="Enter Last Name" th:field="*{lastName}">
+
+        </div>
+        <div class="form-group">
+            <label for="dob">Date Of Birth</label>
+            <input class="form-control" type="date" id="dob"required  placeholder="Enter Date Of Birth" th:field="*{dob}">
+        </div>
+        <div class="form-group">
+            <label for="hireDate">Hire Date</label>
+            <input class="form-control" id="hireDate" type="date" required placeholder="Enter Hire Date" th:field="*{hireDate}">
+        </div>
+        <div class="form-group">
+            <label for="ssn">SSN</label>
+            <input class="form-control" id="ssn"  placeholder="Enter SSN" th:field="*{ssn}">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="alert alert-danger" role="alert" th:utext="${msg}" th:if="${msg}!= null">
+        This is a danger alert—check it out!
+    </div>
+    <div class="alert alert-info" role="alert" th:text="${#request.getParameter('m')}" th:unless="${#request.getParameter('m') == null}">
+        This is a info alert—check it out!
+    </div>
+    </div>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Hire Date</th>
+            <th scope="col">SSN</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody th:remove="all-but-first">
+        <tr  th:each="employee:${employeeList}">
+            <th scope="row" th:text="${employee.id}">1</th>
+            <td th:text="${employee.firstName}">Mark</td>
+            <td th:text="${employee.lastName}">Otto</td>
+            <td th:text="${employee.dob}">@mdo</td>
+            <td th:text="${employee.hireDate}">@mdo</td>
+            <td th:text="${employee.ssn}">@mdo</td>
+            <td><a th:href="@{'/edit/'+${employee.id}}">Edit</a> </td>
+            <td><a th:href="@{'/delete/'+${employee.id}}">Delete</a></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="btn-group border rounded m-auto" role="group" aria-label="Basic example" th:if="${pageNumbers}!=null" >
+        <div th:each="pageNumber : ${pageNumbers}" class="float-left">
+            <a th:href="@{/(page=${pageNumber}-1)}"
+               th:text="${pageNumber}"
+               th:class="${pageNumber-1==currentPage} ? 'btn btn-primary active':'btn btn-light'"></a>
+        </div>
+    </div>
+</body>
+</html>

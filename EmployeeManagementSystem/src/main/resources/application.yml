@@ -1,0 +1,15 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: fda4aa0683e97dc55e67
+            client-secret: 5eb2413e9ef46ba374ebd9527a2c36c47d62e2bb
+  thymeleaf:
+    cache: false
+url: http://localhost:8080/
+
